@@ -1,0 +1,82 @@
+﻿@model IEnumerable<TaskUser.Models.Worker>
+
+@{
+    ViewData["Title"] = "Workers List";
+}
+
+<h1>Index</h1>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <p>
+                <a asp-action="Create">Create New Worker</a>
+            </p>
+        </div>
+            
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Tasks">TASK</a>
+        </div>
+
+        <div class="col-md-4">
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    <input type="submit" value="Выход" />
+                </form>
+        </div>
+    </div>
+</div>
+
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">@Html.DisplayNameFor(model => model.FIO)</a>
+</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PositionSortParam"]">@Html.DisplayNameFor(model => model.Position)</a>
+</th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
